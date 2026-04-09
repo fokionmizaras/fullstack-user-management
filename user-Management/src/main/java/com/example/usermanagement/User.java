@@ -33,7 +33,7 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    @NotBlank(message = "Password is required")
+    //@NotBlank(message = "Password is required")
     @Size(min = 8, message = "Password must be at least 8 characters long")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;

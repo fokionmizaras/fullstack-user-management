@@ -79,10 +79,14 @@ function User() {
     function handleCancel() {
         setEditUserId(null);
     }
-    
+
     async function handleSave(id) {
         try{
-            await axios.put(`${API_URL}/${id}`, editFormData);
+            const dataToSend = {...editFormData};
+            if(!dataToSend.password || dataToSend.password.trim() === "") {
+                delete dataToSend.password;
+            }
+            await axios.put(`${API_URL}/${id}`, dataToSend);
             setEditUserId(null);
             fetchUsers();
         }
