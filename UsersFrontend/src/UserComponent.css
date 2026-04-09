@@ -1,0 +1,76 @@
+.container{
+    padding: 20px;
+    max-width: 900px;
+    margin: 40px auto
+    font-family 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.form-card {
+    border: 1px solid #e0e0e0;
+    padding: 25px;
+    margin-bottom: 40px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box; /* Για να μην ξεφεύγει το padding από το πλάτος */
+}
+
+.submit-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.error-text {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+}
+
+.user-table th, .user-table td {
+    padding: 12px 15px;
+    border: 1px solid #eee;
+    text-align: left;
+}
+
+.user-table th {
+    background-color: #f8f9fa;
+    color: #333;
+    font-weight: 600;
+}
+
+.user-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.empty-msg {
+    text-align: center;
+    color: #888;
+    padding: 20px;
+}
