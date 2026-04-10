@@ -18,6 +18,7 @@ function User() {
     const [editUserId, setEditUserId] = useState(null);
     //temporal state variable to save the changes made to the form after clicking the edit button
     const [editFormData, setEditFormData] = useState(dataObject);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     //Run the effect by calling the fetchUsers function only once when the app loads
     useEffect(() => {
@@ -75,9 +76,12 @@ function User() {
             email: user.email,
             password: ""
         });
+        setIsModalOpen(true);
     }
     function handleCancel() {
         setEditUserId(null);
+        setEditFormData({firstName: "", lastName: "", email: "", password: ""});
+        setIsModalOpen(false);
     }
 
     async function handleSave(id) {
@@ -89,6 +93,7 @@ function User() {
             await axios.put(`${API_URL}/${id}`, dataToSend);
             setEditUserId(null);
             fetchUsers();
+            handleCancel();
         }
         catch(error) {
             console.error("Error updating user with id: " + id, error);
@@ -158,49 +163,6 @@ function User() {
                         {users.length > 0 ? (
                             users.map(user => (
                                 <tr key={user.id}>
-                                    {editUserId === user.id ? (
-                                        <>
-                                         <td>{user.id}</td>
-                                         <td>
-                                            <input
-                                            type="text"
-                                            value={editFormData.firstName}
-                                            onChange={(e) => setEditFormData({...editFormData, firstName: e.target.value})}
-                                            />
-                                         <td/>
-                                         <td>
-                                            <input
-                                            type="text"
-                                            value={editFormData.lastName}
-                                            onChange={(e) => setEditFormData({...editFormData, lastName: e.target.value})}
-                                            />
-                                         </td>
-                                            
-                                         <td/>
-                                            <input
-                                            type="text"
-                                            value={editFormData.email}
-                                            onChange={(e) => setEditFormData({...editFormData, email: e.target.value})}
-                                            />
-                                         </td>
-                                         <td>
-                                            <input
-                                            type="password"
-                                            value={editFormData.password}
-                                            onChange={(e) => setEditFormData({...editFormData, password: e.target.value})}
-                                            />
-                                         </td>
-                                         <td>
-                                            <button onClick={() => handleSave(user.id)}>
-                                                Save Changes
-                                            </button>
-                                            <button onClick={() => handleCancel()}>
-                                                Cancel
-                                            </button>
-                                         </td>
-                                        </>
-                                        
-                                    ):(
                                         <>
                                             <td>{user.id}</td>
                                             <td>{user.firstName}</td>
@@ -211,19 +173,66 @@ function User() {
                                                 <button onClick={() => handleEditClick(user)}>Edit</button>
                                             </td>
                                         </>
-                                    )}
                                     
-                                      
                                 </tr>
-                            ))
-                        ) : 
-                        <tr>
-                            <td colSpan={4} className="empty-msg">No users registered yet</td>
-                        </tr>
+                            
+                            ))) : 
+                            <tr>
+                                <td colSpan={4} className="empty-msg">No users registered yet</td>
+                            </tr>
                         }
                     </tbody>
                 </table>
             </section>
+            {isModalOpen && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h3>Edit User Profile</h3>
+                        <hr />
+                        <div className="form-group">
+                            <label>First Name: </label>
+                            <input className="form-input"
+                            type="text" 
+                            value={editFormData.firstName}
+                            onChange={(e) => setEditFormData({...editFormData, firstName: e.target.value})}
+                            />
+                        </div>
+                         <div className="form-group">
+                            <label>Last Name: </label>
+                            <input className="form-input"
+                            type="text" 
+                            value={editFormData.lastName}
+                            onChange={(e) => setEditFormData({...editFormData, lastName: e.target.value})}
+                            />
+                        </div>
+                         <div className="form-group">
+                            <label>Email: </label>
+                            <input className="form-input"
+                            type="text" 
+                            value={editFormData.email}
+                            onChange={(e) => setEditFormData({...editFormData, email: e.target.value})}
+                            />
+                        </div>
+                         <div className="form-group">
+                            <label>New Password (Optional): </label>
+                            <input className="form-input"
+                            type="password" 
+                            placeholder="Leave it blank if you want the current password"
+                            value={editFormData.password}
+                            onChange={(e) => setEditFormData({...editFormData, password: e.target.value})}
+                            />
+                        </div>
+                        <div className="modal-actions">
+                            <button className="submit-btn" onClick={() => handleSave(editUserId)}>
+                                Save Changes
+                            </button>
+                            <button className="cancel-btn" onClick={() => handleCancel()}>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

@@ -1,5 +1,6 @@
 package com.example.usermanagement;
 
+import com.example.usermanagement.repository.UserRepository;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -19,22 +20,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "First name can not be empty")
+    @NotBlank(message = "First name can not be empty", groups = {UserRepository.OnCreate.class, UserRepository.OnUpdate.class})
     @Column(nullable = false)
     private String firstName;
 
-    @NotBlank(message = "Last name can not be empty")
+    @NotBlank(message = "Last name can not be empty", groups = {UserRepository.OnCreate.class, UserRepository.OnUpdate.class})
     @Column(nullable = false)
     private String lastName;
 
-    @NotBlank(message = "Email can not be empty")
-    @Email(message = "Invalid email format")
+    @NotBlank(groups = {UserRepository.OnCreate.class, UserRepository.OnUpdate.class}, message = "Email can not be empty")
+    @Email(message = "Invalid email format", groups = {UserRepository.OnCreate.class, UserRepository.OnUpdate.class})
     @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
-    //@NotBlank(message = "Password is required")
-    @Size(min = 8, message = "Password must be at least 8 characters long")
+    @NotBlank(groups = UserRepository.OnCreate.class, message = "Password is required")
+    @Size(min = 8, message = "Password must be at least 8 characters long", groups = UserRepository.OnCreate.class)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
