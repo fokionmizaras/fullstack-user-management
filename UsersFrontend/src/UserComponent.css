@@ -199,3 +199,16 @@ header h1 {
     padding: 10px 20px;
     min-width: 100px;
 }
+
+.user-table td:last-child {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.delete-btn, .edit-btn{
+    min-width: 80px;
+}

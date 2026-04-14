@@ -86,6 +86,11 @@ function User() {
 
     async function handleSave(id) {
         try{
+            setErrors({});
+            if(editFormData.password.length > 0 && editFormData.password.length < 8) {
+                setErrors({password: "Password must be at least 8 characters long"});
+                return;
+            }
             const dataToSend = {...editFormData};
             if(!dataToSend.password || dataToSend.password.trim() === "") {
                 delete dataToSend.password;
@@ -221,6 +226,7 @@ function User() {
                             value={editFormData.password}
                             onChange={(e) => setEditFormData({...editFormData, password: e.target.value})}
                             />
+                            {errors.password && <div className="error-text">{errors.password}</div>}
                         </div>
                         <div className="modal-actions">
                             <button className="submit-btn" onClick={() => handleSave(editUserId)}>
