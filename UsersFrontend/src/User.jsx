@@ -148,7 +148,6 @@ function User() {
                         onChange={handleInputChange}
                         />
                         {errors.password && <div className="error-text">{errors.password}</div>}
-                        {errors.message && <div className="error-text">{errors.message}</div>}
                     </div>
                     <button type="submit" className="submit-btn">Create User</button>
                 </form>
